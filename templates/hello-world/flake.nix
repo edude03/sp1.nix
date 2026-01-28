@@ -14,8 +14,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     sp1 = {
-      url = "path:../..";
-      #url = "github:argumentcomputer/sp1.nix";
+      url = "github:argumentcomputer/sp1.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

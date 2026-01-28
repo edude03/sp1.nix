@@ -136,14 +136,18 @@
         ]
       },
       "locked": {
-        "path": "../..",
-        "type": "path"
+        "lastModified": 1769631737,
+        "narHash": "sha256-4i2Y58/XpAU9Ciqddn/Resi+5fHWpmCsf0iJj936d5E=",
+        "owner": "argumentcomputer",
+        "repo": "sp1.nix",
+        "rev": "fb8fbb1395d4cab3cbbfc5b469b200185bedda73",
+        "type": "github"
       },
       "original": {
-        "path": "../..",
-        "type": "path"
-      },
-      "parent": []
+        "owner": "argumentcomputer",
+        "repo": "sp1.nix",
+        "type": "github"
+      }
     }
   },
   "root": "root",
