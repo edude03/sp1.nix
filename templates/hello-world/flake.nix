@@ -13,6 +13,11 @@
       url = "github:nix-community/fenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sp1 = {
+      url = "path:../..";
+      #url = "github:argumentcomputer/sp1.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
@@ -20,6 +25,7 @@
     nixpkgs,
     flake-parts,
     fenix,
+    sp1,
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
       # Systems we want to build for
@@ -42,12 +48,18 @@
           # Just copy the expected hash from the `nix build` error message
           sha256 = "sha256-sqSWJDUxc+zaz1nBWMAJKTAGBuGWP25GCftIOlCEAtA=";
         };
+        # Shim that uses succinct toolchain when RUSTUP_TOOLCHAIN=succinct
+        rustc-shim = sp1.packages.${system}.rustup-shim.override {
+          rustc = rustToolchain;
+        };
       in {
         packages = {
           default = pkgs.hello;
         };
         devShells.default = pkgs.mkShell {
-          packages = with pkgs; [
+          inputsFrom = [sp1.devShells.${system}.default];
+          packages = [
+            rustc-shim
             rustToolchain
           ];
         };
