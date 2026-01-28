@@ -34,7 +34,10 @@
         cargo-prove = pkgs.callPackage ./pkgs/cargo-prove.nix {};
         succinct-rust = pkgs.callPackage ./pkgs/succinct-rust.nix {};
         sp1-home = pkgs.callPackage ./pkgs/sp1-home.nix {inherit cargo-prove succinct-rust;};
-        rustup-shim = pkgs.callPackage ./pkgs/rustup-shim.nix {inherit succinct-rust;};
+        rustup-shim = pkgs.callPackage ./pkgs/rustup-shim.nix {
+          inherit succinct-rust;
+          rustToolchain = pkgs.rustc;
+        };
       in {
         packages = {
           inherit cargo-prove succinct-rust sp1-home rustup-shim;

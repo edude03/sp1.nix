@@ -40,16 +40,14 @@
         pkgs,
         ...
       }: let
-        # Pins the Rust toolchain
-        rustToolchain = fenix.packages.${system}.fromToolchainFile {
-          file = ./rust-toolchain.toml;
-          # Update this hash when `rust-toolchain.toml` changes
-          # Just copy the expected hash from the `nix build` error message
-          sha256 = "sha256-sqSWJDUxc+zaz1nBWMAJKTAGBuGWP25GCftIOlCEAtA=";
-        };
-        # Shim that uses succinct toolchain when RUSTUP_TOOLCHAIN=succinct
-        rustc-shim = sp1.packages.${system}.rustup-shim.override {
-          rustc = rustToolchain;
+        # Pins the Rust toolchain with succinct support
+        rustToolchain = sp1.packages.${system}.rustup-shim.override {
+          rustToolchain = fenix.packages.${system}.fromToolchainFile {
+            file = ./rust-toolchain.toml;
+            # Update this hash when `rust-toolchain.toml` changes
+            # Just copy the expected hash from the `nix build` error message
+            sha256 = "sha256-sqSWJDUxc+zaz1nBWMAJKTAGBuGWP25GCftIOlCEAtA=";
+          };
         };
       in {
         packages = {
@@ -58,7 +56,6 @@
         devShells.default = pkgs.mkShell {
           inputsFrom = [sp1.devShells.${system}.default];
           packages = [
-            rustc-shim
             rustToolchain
           ];
         };

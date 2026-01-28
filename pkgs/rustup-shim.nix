@@ -1,17 +1,22 @@
 {
-  lib,
+  symlinkJoin,
   writeShellApplication,
   succinct-rust,
-  rustc,
+  rustToolchain,
 }:
-writeShellApplication {
-  name = "rustc";
-  runtimeInputs = [];
-  text = ''
-    if [ "''${RUSTUP_TOOLCHAIN:-}" = "succinct" ]; then
-      exec ${succinct-rust}/bin/rustc "$@"
-    else
-      exec ${rustc}/bin/rustc "$@"
-    fi
-  '';
+let
+  rustc-shim = writeShellApplication {
+    name = "rustc";
+    runtimeInputs = [];
+    text = ''
+      if [ "''${RUSTUP_TOOLCHAIN:-}" = "succinct" ]; then
+        exec ${succinct-rust}/bin/rustc "$@"
+      fi
+      exec ${rustToolchain}/bin/rustc "$@"
+    '';
+  };
+in
+symlinkJoin {
+  name = "rust-toolchain-with-succinct";
+  paths = [rustc-shim rustToolchain];
 }
