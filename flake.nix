@@ -24,7 +24,6 @@
     flake-parts,
   }:
     flake-parts.lib.mkFlake {inherit inputs;} {
-      # Systems we want to build for
       systems = [
         "aarch64-darwin"
         "aarch64-linux"

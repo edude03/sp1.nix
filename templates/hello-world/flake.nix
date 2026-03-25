@@ -15,7 +15,7 @@
     nixpkgs.follows = "sp1/nixpkgs";
 
     # Helper: flake-parts for easier outputs
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-parts.follows = "sp1/flake-parts";
 
     # Rust toolchain
     fenix = {
