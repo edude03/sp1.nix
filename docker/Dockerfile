@@ -2,7 +2,7 @@ FROM ubuntu:24.04
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Base Zisk dependencies
+# Base SP1 dependencies
 RUN apt-get update && apt-get install -y \
   curl build-essential git \
 #     xz-utils jq curl build-essential qemu-system \

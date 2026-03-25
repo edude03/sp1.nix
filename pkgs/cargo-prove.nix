@@ -3,27 +3,32 @@
   rustPlatform,
   fetchFromGitHub,
   pkg-config,
+  protobuf,
   openssl,
   stdenv,
   darwin,
 }:
 rustPlatform.buildRustPackage rec {
   pname = "cargo-prove";
-  version = "5.2.4";
+  version = "6.0.2";
 
   src = fetchFromGitHub {
     owner = "succinctlabs";
     repo = "sp1";
     rev = "v${version}";
-    hash = "sha256-sCQOZmhuMETn08eYtIDO2Vckx/oBclmReoVYYNGEb38=";
+    hash = "sha256-DJ3/BlGJX9eLsBPMsmKtnoJYF9vgkxKn32dybQVggxA=";
   };
 
-  cargoHash = "sha256-DAkJwQJXt68/GU04fIulXOB8utqoyNr+1j5VBWRoRXo=";
+  cargoHash = "sha256-6MCx5a6vydi34YvWgN+8Sj69FCZugHabQGXowv+550g=";
 
   buildAndTestSubdir = "crates/cli";
 
+  # Tests require network access which is not available in sandboxed Nix builds.
+  doCheck = false;
+
   nativeBuildInputs = [
     pkg-config
+    protobuf
   ];
 
   buildInputs =

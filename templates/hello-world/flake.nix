@@ -1,9 +1,18 @@
 {
-  description = "A very basic flake";
+  description = "SP1 template Nix flake";
+
+  nixConfig = {
+    extra-substituters = [
+      "https://cache.garnix.io"
+    ];
+    extra-trusted-public-keys = [
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+    ];
+  };
 
   inputs = {
     # System packages
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.follows = "sp1/nixpkgs";
 
     # Helper: flake-parts for easier outputs
     flake-parts.url = "github:hercules-ci/flake-parts";
@@ -15,7 +24,6 @@
     };
     sp1 = {
       url = "github:argumentcomputer/sp1.nix";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
@@ -46,7 +54,7 @@
             file = ./rust-toolchain.toml;
             # Update this hash when `rust-toolchain.toml` changes
             # Just copy the expected hash from the `nix build` error message
-            sha256 = "sha256-sqSWJDUxc+zaz1nBWMAJKTAGBuGWP25GCftIOlCEAtA=";
+            sha256 = "sha256-SBKjxhC6zHTu0SyJwxLlQHItzMzYZ71VCWQC2hOzpRY=";
           };
         };
       in {

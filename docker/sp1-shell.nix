@@ -4,9 +4,9 @@
 pkgs.writeShellScriptBin "sp1-shell" ''
   set -e
 
-  CONTAINER_NAME="''${ZISK_CONTAINER_NAME:-sp1-dev}"
-  IMAGE_NAME="''${ZISK_IMAGE:-localhost/cargo-prove:latest}"
-  SHELL="''${ZISK_SHELL:-/bin/bash}"
+  CONTAINER_NAME="''${SP1_CONTAINER_NAME:-sp1-dev}"
+  IMAGE_NAME="''${SP1_IMAGE:-localhost/cargo-prove:latest}"
+  SHELL="''${SP1_SHELL:-/bin/bash}"
 
   # Check if container exists
   if ${pkgs.podman}/bin/podman container exists "$CONTAINER_NAME"; then

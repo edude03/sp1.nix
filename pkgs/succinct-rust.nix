@@ -5,12 +5,12 @@
   autoPatchelfHook,
   zlib,
 }: let
-  version = "succinct-1.92.0-64bit";
+  version = "succinct-1.93.0-64bit";
 
   platforms = {
     x86_64-linux = {
       target = "x86_64-unknown-linux-gnu";
-      hash = "sha256-PVpVMgojQaOiof3DFLW1A4RBSk1SRYXBdbd/arA74Ng=";
+      hash = "sha256-meaN2GTdfulogzM0a0KEUscF2CoRCY5RFGOJQX4MgsY=";
     };
     aarch64-linux = {
       target = "aarch64-unknown-linux-gnu";
