@@ -11,18 +11,31 @@
     name = "rustc";
     runtimeInputs = [];
     text = ''
-      # Dispatch to the succinct rustc for SP1 riscv targets, standard
-      # rustc for everything else (including build scripts / proc-macros).
-      # We check args regardless of RUSTUP_TOOLCHAIN because RUSTC env
-      # may be set globally (not just inside the cargo-shim).
+      # Handle +succinct syntax (rustup convention used by sp1-build).
+      # Strip it from args and set RUSTUP_TOOLCHAIN.
+      args=()
       for arg in "$@"; do
-        case "$arg" in
-          riscv32im-succinct-zkvm-elf|riscv64im-succinct-zkvm-elf|\
-          *riscv32im-succinct*|*riscv64im-succinct*)
-            exec ${succinct-rust}/bin/rustc "$@"
-            ;;
-        esac
+        if [ "$arg" = "+succinct" ]; then
+          export RUSTUP_TOOLCHAIN=succinct
+        else
+          args+=("$arg")
+        fi
       done
+      set -- "''${args[@]}"
+
+      # Dispatch to the succinct rustc for SP1 riscv targets or when
+      # RUSTUP_TOOLCHAIN=succinct, standard rustc for everything else
+      # (including build scripts / proc-macros).
+      if [ "''${RUSTUP_TOOLCHAIN:-}" = "succinct" ]; then
+        for arg in "$@"; do
+          case "$arg" in
+            riscv32im-succinct-zkvm-elf|riscv64im-succinct-zkvm-elf|\
+            *riscv32im-succinct*|*riscv64im-succinct*)
+              exec ${succinct-rust}/bin/rustc "$@"
+              ;;
+          esac
+        done
+      fi
       exec ${rustToolchain}/bin/rustc "$@"
     '';
   };
@@ -31,6 +44,17 @@
     name = "cargo";
     runtimeInputs = [];
     text = ''
+      # Handle +succinct syntax (rustup convention).
+      args=()
+      for arg in "$@"; do
+        if [ "$arg" = "+succinct" ]; then
+          export RUSTUP_TOOLCHAIN=succinct
+        else
+          args+=("$arg")
+        fi
+      done
+      set -- "''${args[@]}"
+
       if [ "''${RUSTUP_TOOLCHAIN:-}" = "succinct" ]; then
         # Set RUSTC to our rustc-shim which dispatches based on --target.
         # This ensures build scripts use the standard rustc while SP1
