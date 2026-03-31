@@ -56,10 +56,12 @@
       set -- "''${args[@]}"
 
       if [ "''${RUSTUP_TOOLCHAIN:-}" = "succinct" ]; then
-        # Set RUSTC to our rustc-shim which dispatches based on --target.
-        # This ensures build scripts use the standard rustc while SP1
-        # riscv targets use the succinct rustc.
+        # Use our rustc-shim which dispatches based on --target.
+        # Set both RUSTC env and --config so cargo uses the shim for
+        # target-info probes (cargo ignores RUSTC for probes but
+        # respects build.rustc from config).
         export RUSTC="${rustc-shim}/bin/rustc"
+        exec ${rustToolchain}/bin/cargo --config "build.rustc='${rustc-shim}/bin/rustc'" "$@"
       fi
       exec ${rustToolchain}/bin/cargo "$@"
     '';
