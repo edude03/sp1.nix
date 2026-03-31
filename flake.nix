@@ -42,13 +42,17 @@
         cargo-prove = pkgs.callPackage ./pkgs/cargo-prove.nix {};
         succinct-rust = pkgs.callPackage ./pkgs/succinct-rust.nix {};
         sp1-home = pkgs.callPackage ./pkgs/sp1-home.nix {inherit cargo-prove succinct-rust;};
+        sp1-rust-toolchain = pkgs.callPackage ./pkgs/sp1-rust-toolchain.nix {
+          inherit succinct-rust;
+          rustToolchain = pkgs.rustc;
+        };
         rustup-shim = pkgs.callPackage ./pkgs/rustup-shim.nix {
           inherit succinct-rust;
           rustToolchain = pkgs.rustc;
         };
       in {
         packages = {
-          inherit cargo-prove succinct-rust sp1-home rustup-shim;
+          inherit cargo-prove succinct-rust sp1-home sp1-rust-toolchain rustup-shim;
           build-image = pkgs.callPackage ./docker/build-image.nix {};
           run-sp1 = pkgs.callPackage ./docker/run-sp1.nix {};
           sp1-shell = pkgs.callPackage ./docker/sp1-shell.nix {};

@@ -48,6 +48,10 @@ in
       zlib
     ];
 
+    # Stripping Rust toolchains corrupts the embedded metadata in
+    # host stdlib/proc-macro archives on Darwin.
+    dontStrip = true;
+
     installPhase = ''
       mkdir -p $out
       cp -r * $out/

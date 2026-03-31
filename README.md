@@ -28,6 +28,7 @@ Build individual packages with `nix build`:
 nix build .#cargo-prove
 nix build .#succinct-rust
 nix build .#sp1-home
+nix build .#sp1-rust-toolchain
 nix build .#rustup-shim
 ```
 
@@ -36,6 +37,7 @@ nix build .#rustup-shim
 | `cargo-prove` | SP1 CLI (`cargo prove`) |
 | `succinct-rust` | Succinct's patched Rust toolchain |
 | `sp1-home` | Composed `~/.sp1` home directory |
+| `sp1-rust-toolchain` | Synthetic sysroot wrapper for SP1 builds in larger Cargo workspaces |
 | `rustup-shim` | Shim that routes `rustc` to `succinct-rust` when `RUSTUP_TOOLCHAIN=succinct` |
 
 ## Dev Shell
