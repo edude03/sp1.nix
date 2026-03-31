@@ -22,7 +22,7 @@
     };
     aarch64-darwin = {
       target = "aarch64-apple-darwin";
-      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      hash = "sha256-juTqDyfvv3Pd/oogOM7UwIAv3Pnh7hCTSXY7n0qAjPY=";
     };
   };
 

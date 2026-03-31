@@ -31,14 +31,9 @@ rustPlatform.buildRustPackage rec {
     protobuf
   ];
 
-  buildInputs =
-    [
-      openssl
-    ]
-    ++ lib.optionals stdenv.hostPlatform.isDarwin [
-      darwin.apple_sdk.frameworks.Security
-      darwin.apple_sdk.frameworks.SystemConfiguration
-    ];
+  buildInputs = [
+    openssl
+  ];
 
   meta = with lib; {
     description = "CLI for SP1, a performant zkVM";
