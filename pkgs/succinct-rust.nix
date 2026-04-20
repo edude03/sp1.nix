@@ -14,11 +14,11 @@
     };
     aarch64-linux = {
       target = "aarch64-unknown-linux-gnu";
-      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      hash = "sha256-AzmcLjFWHc79WP4fRnuO9E/Gk1MfEyZSBROzlhp6kmc=";
     };
     x86_64-darwin = {
       target = "x86_64-apple-darwin";
-      hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+      hash = "sha256-TYCXpLpdJxK/pur0nPYo5ITkBywgkI7LWmoj4iap52A=";
     };
     aarch64-darwin = {
       target = "aarch64-apple-darwin";
