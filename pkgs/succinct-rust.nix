@@ -37,7 +37,16 @@ in
       hash = platform.hash;
     };
 
-    sourceRoot = ".";
+    # Tarball has a "./" entry; extracting into $NIX_BUILD_TOP makes tar try
+    # to utime/chmod the build root, which fails on some sandboxes (e.g.
+    # bind-mounted build dirs on remote builders). Extract into a subdir.
+    unpackPhase = ''
+      runHook preUnpack
+      mkdir -p source
+      tar -xf "$src" -C source
+      cd source
+      runHook postUnpack
+    '';
 
     nativeBuildInputs = lib.optionals stdenv.hostPlatform.isLinux [
       autoPatchelfHook
